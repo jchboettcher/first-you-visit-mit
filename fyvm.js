@@ -36,6 +36,15 @@ const parseList = s => {
   }
 }
 
+function mouseClicked() {
+  const n = 60-(mouseY-y)/h*120;
+  const e = (mouseX-x)/w*360-180;
+  if (abs(n) <= 60 && abs(e) < 180) {
+    console.log(n,e);
+    pts.push({n,e});
+  }
+}
+
 function draw() {
   background(255);
   translate(x,y);
