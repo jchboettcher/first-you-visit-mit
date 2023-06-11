@@ -1,23 +1,26 @@
-let mit_image = undefined;
+const images = [];
 let w = 0;
 let h = 0;
 let x = 0;
 let y = 0;
 let pts = [];
+let imgIdx = 0;
 
 function preload() {
-  mit_image = loadImage("mit.png");
+  images.push(loadImage("mit.png"));
+  images.push(loadImage("letters1.png"));
+  images.push(loadImage("letters2.png"));
 }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  if (window.innerWidth/window.innerHeight > mit_image.width/mit_image.height) {
+  if (window.innerWidth/window.innerHeight > images[1].width/images[1].height) {
     h = window.innerHeight;
-    w = mit_image.width/mit_image.height*h;
+    w = images[1].width/images[1].height*h;
     x = (window.innerWidth-w)/2;
   } else {
     w = window.innerWidth;
-    h = mit_image.height/mit_image.width*w;
+    h = images[1].height/images[1].width*w;
     y = (window.innerHeight-h)/2;
   }
   stroke(0,0,255);
@@ -45,10 +48,18 @@ function mouseClicked() {
   }
 }
 
+function keyPressed() {
+  if (keyCode == LEFT_ARROW) {
+    imgIdx = (imgIdx+images.length-1)%images.length;
+  } else if (keyCode == RIGHT_ARROW) {
+    imgIdx = (imgIdx+1)%images.length;
+  }
+}
+
 function draw() {
   background(255);
   translate(x,y);
-  image(mit_image,0,0,w,h,w/1200,h/280);
+  image(images[imgIdx],0,0,w,h,w/1200,h/280);
   translate(w/2,h/2);
   strokeWeight(8);
   for (let pt of pts) {
